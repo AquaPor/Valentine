@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>message for you</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .heart {
+            width: 10px;
+            height: 10px;
+            position: absolute;
+            background: #e94d58;
+            animation: animateHeart 1s ease-out infinite;
+            transform-origin: center bottom;
+            opacity: 0;
+        }
+
+        @keyframes animateHeart {
+            0% {
+                transform: scale(1);
+            }
+            25% {
+                transform: scale(1.3);
+            }
+            50% {
+                transform: scale(1);
+            }
+            75% {
+                transform: scale(1.3);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0% { transform: translate(0, 0) rotate(0); }
+            10% { transform: translate(-10px, 0) rotate(-5deg); }
+            20% { transform: translate(10px, 0) rotate(5deg); }
+            30% { transform: translate(-10px, 0) rotate(-5deg); }
+            40% { transform: translate(10px, 0) rotate(5deg); }
+            50% { transform: translate(-10px, 0) rotate(-5deg); }
+            60% { transform: translate(10px, 0) rotate(5deg); }
+            70% { transform: translate(-10px, 0) rotate(-5deg); }
+            80% { transform: translate(10px, 0) rotate(5deg); }
+            90% { transform: translate(-10px, 0) rotate(-5deg); }
+            100% { transform: translate(0, 0) rotate(0); }
+        }
+    </style>
+</head>
+<body class="bg-whitesmoke flex flex-col justify-center items-center min-h-screen font-sans relative">
+    <div class="wrapper max-w-md text-center">
+        <h2 id="question" class="question text-red-600 text-lg mb-4">Will you go out with me?</h2>
+        <img id="gif" class="gif w-full h-auto mb-8" alt="gif" src="https://media.giphy.com/media/FTGah7Mx3ss04PcasF/giphy.gif"/>
+        <div class="btn-group flex justify-center">
+            <button id="yesButton" class="yes-btn mr-2 bg-red-600 text-white px-4 py-2 rounded-full">Yes</button>
+            <button id="noButton" class="no-btn ml-2 border-2 border-red-600 text-red-600 px-4 py-2 rounded-full">No</button>
+            <div id="heartContainer" class="absolute inset-0 pointer-events-none"></div>
+        </div>
+    </div>
+    <script>
+        const noBtn = document.getElementById('noButton');
+        const heartContainer = document.getElementById('heartContainer');
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = Math.random() * 2 + 1 + 's';
+            heartContainer.appendChild(heart);
+            setTimeout(() => {
+                heart.remove();
+            }, 2000);
+        }
+
+        const yesBtn = document.getElementById('yesButton');
+        const question = document.getElementById('question');
+        const gif = document.getElementById('gif');
+
+        yesBtn.addEventListener("click", () => {
+            question.textContent = "Yay, see you on the 17th!";
+            gif.src = "https://media.giphy.com/media/UMon0fuimoAN9ueUNP/giphy.gif";
+            for (let i = 0; i < 5; i++) {
+                createHeart();
+            }
+        });
+
+        noBtn.addEventListener("click", () => {
+            noBtn.classList.add('shake');
+            setTimeout(() => {
+                noBtn.classList.remove('shake');
+                for (let i = 0; i < 5; i++) {
+                    createHeart();
+                }
+            }, 500);
+        });
+    </script>
+</body>
+</html>
